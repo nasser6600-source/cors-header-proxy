@@ -1,7 +1,7 @@
 export default {
 	async fetch(request): Promise<Response> {
 		const corsHeaders = {
-			"Access-Control-Allow-Origin": url.origin,
+			"Access-Control-Allow-Origin": request.url.origin,
 			"Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
 			"Access-Control-Max-Age": "86400",
 		};
