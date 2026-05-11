@@ -222,7 +222,7 @@ const fetchLiveNews = async () => {
         // Check if the news link already exists in the current alerts
         const isDuplicate = prevAlerts.some(alert => alert.url === news.link) || 
                            newEntries.some(entry => entry.url === news.link)
-						   || news.timestamp <= d24;
+						   || news.timestamp > d24;
 
         if (!isDuplicate) {
           const timestamp = news.pubDate ? new Date(news.pubDate).getTime() : Date.now();
