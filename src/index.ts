@@ -179,7 +179,7 @@ const fetchLiveNews = async () => {
     // 2. Query all sources in parallel
     const feedPromises = FEEDS.map(async (feed) => {
       try {
-        const response = await fetch(PROXY+encodeURIComponent(feed.url),{
+        const response = await fetch(PROXY+(feed.url),{
 			headers:{
 				"x-corsfix-key":"cfx_dd1e26ee2f2efb0ad3028b3cd55d3ef0"
 			}
