@@ -220,12 +220,13 @@ const fetchLiveNews = async () => {
 
       filteredNews.forEach(news => {
         // Check if the news link already exists in the current alerts
+		const timestamp = news.pubDate ? new Date(news.pubDate).getTime() : Date.now();
         const isDuplicate = prevAlerts.some(alert => alert.url === news.link) || 
                            newEntries.some(entry => entry.url === news.link)
-						   || news.timestamp <= d24;
+						   || timestamp <= d24;
 
         if (!isDuplicate) {
-          const timestamp = news.pubDate ? new Date(news.pubDate).getTime() : Date.now();
+          
           const level = 1; // analyzeGeopolitics(news.title);
 
           newEntries.push({
