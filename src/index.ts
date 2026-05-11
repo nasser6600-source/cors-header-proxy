@@ -211,7 +211,7 @@ const fetchLiveNews = async () => {
       keywords.some(k => 
         (news.title + news.description).toLowerCase().includes(k.toLowerCase())
       )
-	  && news.timestamp > d24
+	  
     );
 
     // 4. Update state with duplicate prevention
@@ -221,7 +221,8 @@ const fetchLiveNews = async () => {
       filteredNews.forEach(news => {
         // Check if the news link already exists in the current alerts
         const isDuplicate = prevAlerts.some(alert => alert.url === news.link) || 
-                           newEntries.some(entry => entry.url === news.link);
+                           newEntries.some(entry => entry.url === news.link)
+						   || news.timestamp <= d24;
 
         if (!isDuplicate) {
           const timestamp = news.pubDate ? new Date(news.pubDate).getTime() : Date.now();
