@@ -141,9 +141,9 @@ function HormuzAgent() {
 
     if (diff < 1) return "منذ لحظات";
 
-    if (diff < 60) return `منذ ${diff} دقيقة`;
+    if (diff < 60) return "منذ "+diff+" دقيقة";
 
-    return `منذ ${Math.floor(diff / 60)} ساعة`;
+    return "منذ "+Math.floor(diff / 60)+" ساعة";
 
   };
 const fetchLiveNews = async () => {
@@ -179,7 +179,7 @@ const fetchLiveNews = async () => {
     // 2. Query all sources in parallel
     const feedPromises = FEEDS.map(async (feed) => {
       try {
-        const response = await fetch(`${PROXY}${encodeURIComponent(feed.url)}`);
+        const response = await fetch(PROXY+encodeURIComponent(feed.url));
         const data = await response.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(data, "text/xml");
@@ -193,7 +193,7 @@ const fetchLiveNews = async () => {
           sourceName: feed.name
         }));
       } catch (e) {
-        console.error(`Error fetching ${feed.name}:`, e);
+        console.error("Error fetching "+feed.name+":", e);
         return [];
       }
     });
@@ -227,7 +227,7 @@ const fetchLiveNews = async () => {
             title: news.title,
             body: news.description,
             level: level,
-            impact: `تحديث من ${news.sourceName}`,
+            impact: "تحديث من "+news.sourceName,
             url: news.link,
             time: new Date(timestamp).toLocaleTimeString("ar-AE", { hour: "2-digit", minute: "2-digit" }),
             date: new Date(timestamp).toLocaleDateString("ar-AE"),
@@ -501,7 +501,7 @@ const d24 = new Date(new Date().setDate(new Date().getDate() -1));
 
               background: alert.level === "critical" ? "#180000" : "#181000",
 
-              borderRight: `6px solid ${alert.level === "critical" ? "#ff2d2d" : "#ff8c00"}`,
+              borderRight: "6px solid "+alert.level === "critical" ? "#ff2d2d" : "#ff8c00",
 
               padding: "18px 20px",
 
@@ -567,7 +567,7 @@ const d24 = new Date(new Date().setDate(new Date().getDate() -1));
 
     </script>
 </body>
-</html> `;
+</html>`;
 
 		async function handleRequest(request) {
 			const url = new URL(request.url);
