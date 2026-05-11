@@ -174,6 +174,7 @@ const fetchLiveNews = async () => {
   const keywords = ["Hormuz", "Iran", "Tanker", "Gulf", "Ship", "Navy", "هرمز", "ناقلة", "مضيق", "ايران", "بحرية","سفينة","إيران"];
 
   try {
+	const d24 = new Date(new Date().setDate(new Date().getDate() -1));
     let allNewAlerts = [];
 
     // 2. Query all sources in parallel
@@ -210,6 +211,7 @@ const fetchLiveNews = async () => {
       keywords.some(k => 
         (news.title + news.description).toLowerCase().includes(k.toLowerCase())
       )
+	  && news.timestamp > d24
     );
 
     // 4. Update state with duplicate prevention
@@ -238,14 +240,13 @@ const fetchLiveNews = async () => {
           });
         }
       });
-const d24 = new Date(new Date().setDate(new Date().getDate() -1));
       if (newEntries.length > 0) {
         // Play sound for the most critical of the new batch
         playSound(1); 
         // Combine, sort by newest first, and limit to 12
         return [...newEntries, ...prevAlerts]
-          .sort((a, b) => b.timestamp - a.timestamp)
-	.filter((a,b) => a.timestamp > d24);
+          .sort((a, b) => b.timestamp - a.timestamp);
+//	.filter((a,b) => a.timestamp > d24);
 //          .slice(0, 12);
       }
 
